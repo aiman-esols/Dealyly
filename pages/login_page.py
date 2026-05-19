@@ -1,4 +1,3 @@
-import pytest
 from playwright.sync_api import Page, expect
 
 
@@ -10,18 +9,17 @@ class LoginPage:
         self.email = page.locator("input[type='email']")
         self.password = page.locator("input[type='password']")
         self.submit_btn = page.locator("[role='dialog'] button[type='submit']")
-        self.avatar = page.locator("[class*='avatar'], [class*='user'], button:has(.lucide-user)").first
-        self.avatar = page.locator("a.dl-brand-gradient")  # ← must be here
+        self.avatar = page.locator("a.dl-brand-gradient")
 
     def goto(self):
         self.page.goto("https://dealyly.com/en")
-        self.page.wait_for_load_state("networkidle")
+        self.page.wait_for_load_state("domcontentloaded")
 
     def open_login_modal(self):
-        self.page.wait_for_load_state("networkidle")
-        self.login_btn.wait_for(state="visible", timeout=1000)
+        self.page.wait_for_load_state("domcontentloaded")
+        self.login_btn.wait_for(state="visible", timeout=8000)
         self.login_btn.click()
-        self.page.wait_for_timeout(1000)  # wait for modal animation
+        self.page.wait_for_timeout(500)
 
     def login(self, email: str, password: str):
         self.email.wait_for(state="visible", timeout=10000)
