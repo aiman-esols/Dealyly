@@ -19,7 +19,7 @@ class LoginPage:
 
     def open_login_modal(self):
         self.page.wait_for_load_state("networkidle")
-        self.login_btn.wait_for(state="visible", timeout=8000)
+        self.login_btn.wait_for(state="visible", timeout=1000)
         self.login_btn.click()
         self.page.wait_for_timeout(1000)  # wait for modal animation
 
