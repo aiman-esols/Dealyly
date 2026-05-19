@@ -5,16 +5,6 @@ from pages.post_ad_page import PostAdPage
 from pages.login_page import LoginPage
 
 
-@pytest.fixture
-def authenticated_page(page: Page):
-    login = LoginPage(page)
-    login.goto()
-    login.open_login_modal()
-    login.login("aiman.esols@gmail.com", "Aiman@2025")
-    login.verify_login_success()
-    return page
-
-
 def test_post_car_ad(authenticated_page: Page):
     post_ad = PostAdPage(authenticated_page)
 
