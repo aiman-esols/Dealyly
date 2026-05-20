@@ -1,10 +1,11 @@
 from playwright.sync_api import Page, expect
+from pages.base_page import BaseListingPage
 import re
 
-class PostFashionPage:
+class PostFashionPage(BaseListingPage):
 
     def __init__(self, page: Page):
-        self.page = page
+        super().__init__(page)
 
         self.post_ad_btn = page.locator("a[href='/en/deposer']")
         self.upload_input = page.locator("#sec-photos input[type='file']")
@@ -95,44 +96,3 @@ class PostFashionPage:
         self.material.wait_for(state="visible", timeout=8000)
         self.material.fill(material)
 
-    # ── COMMON FIELDS ─────────────────────────────────────────────────────────
-
-    def fill_title(self, title: str):
-        self.title.wait_for(state="visible", timeout=8000)
-        self.title.fill(title)
-
-    def fill_price(self, price: str):
-        self.price.wait_for(state="visible", timeout=8000)
-        self.price.fill(price)
-
-    def set_negotiable(self):
-        self.page.locator("button.rounded-full:has-text('Negotiable')").click()
-
-    # ── LOCATION ──────────────────────────────────────────────────────────────
-
-    def select_wilaya(self, wilaya_value: str):
-        self.wilaya.wait_for(state="visible", timeout=8000)
-        self.wilaya.select_option(value=wilaya_value)
-        self.page.wait_for_timeout(500)
-
-    def fill_commune(self, commune: str):
-        self.commune.wait_for(state="visible", timeout=8000)
-        self.commune.fill(commune)
-        self.page.locator(f"button.text-start:has-text('{commune}')").first.wait_for(state="visible", timeout=8000)
-        self.page.locator(f"button.text-start:has-text('{commune}')").first.click()
-
-    # ── DESCRIPTION ───────────────────────────────────────────────────────────
-
-    def fill_description(self, text: str):
-        self.description.wait_for(state="visible", timeout=8000)
-        self.description.fill(text)
-
-    # ── SUBMIT ────────────────────────────────────────────────────────────────
-
-    def publish_listing(self):
-        self.publish_btn.wait_for(state="visible", timeout=8000)
-        self.publish_btn.click()
-
-    def save_as_draft(self):
-        self.draft_btn.wait_for(state="visible", timeout=8000)
-        self.draft_btn.click()

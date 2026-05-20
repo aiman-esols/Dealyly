@@ -1,33 +1,22 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
 from pages.base_page import BaseListingPage
 
-class PostHomeGardenPage(BaseListingPage):
+
+class PostSportsPage(BaseListingPage):
 
     def __init__(self, page: Page):
         super().__init__(page)
 
         self.post_ad_btn = page.locator("a[href='/en/deposer']")
         self.upload_input = page.locator("#sec-photos input[type='file']")
-
-        self.wilaya = page.locator("select:has(option[value='2'])")
-        self.commune = page.locator("input[placeholder*='Commencez']")
-
-        self.title = page.locator("input[placeholder='Or type your own…']")
-        self.price = page.locator("input[placeholder='0']")
-        self.brand = page.locator("input[placeholder*='Condor']")
-
-        self.description = page.locator("textarea[placeholder*='Decrivez']")
-        self.ai_description_btn = page.locator("button:has(.lucide-sparkles)")
-
-        self.publish_btn = page.locator("button:has-text('Publish listing')")
-        self.draft_btn = page.locator("button:has-text('Save as draft')")
+        self.brand = page.locator("input[type='text']").first
 
     # ── NAVIGATION ────────────────────────────────────────────────────────────
 
     def go_to_post_ad(self):
         self.post_ad_btn.wait_for(state="visible", timeout=8000)
         self.post_ad_btn.click()
-        self.page.wait_for_load_state("networkidle")
+        self.page.wait_for_load_state("domcontentloaded")
 
     # ── IMAGE UPLOAD ──────────────────────────────────────────────────────────
 
@@ -47,27 +36,25 @@ class PostHomeGardenPage(BaseListingPage):
     # ── CATEGORY ──────────────────────────────────────────────────────────────
 
     def select_category(self):
-        btn = self.page.locator("button[title='Home & Garden']")
+        btn = self.page.locator("button[title='Sports & Hobbies']")
         btn.wait_for(state="visible", timeout=8000)
         btn.click()
         self.page.wait_for_timeout(500)
 
     def select_subcategory(self, subcategory: str):
-        # e.g. "Appliances", "Furniture", "Kitchen & Utensils"
         btn = self.page.get_by_role("button", name=subcategory, exact=True)
         btn.wait_for(state="visible", timeout=8000)
         if "border-primary" not in (btn.get_attribute("class") or ""):
             btn.click()
         self.page.wait_for_timeout(500)
 
-    # ── HOME & GARDEN MATRIX FIELDS ───────────────────────────────────────────
+    # ── SPORTS MATRIX FIELDS ──────────────────────────────────────────────────
 
     def select_type(self, item_type: str):
-        # e.g. "Refrigerator", "Washing Machine", "Oven", "AC"
-        btn = self.page.locator(f"button.rounded-full:has-text('{item_type}')").first
+        # e.g. "Bicycle", "Ball", "Racket", "Fitness", "Music", "Outdoor", "Other"
+        btn = self.page.locator(f"button[aria-pressed]:has-text('{item_type}')").first
         btn.wait_for(state="visible", timeout=8000)
-        if "border-primary" not in (btn.get_attribute("class") or ""):
-            btn.click()
+        btn.click()
         self.page.wait_for_timeout(300)
 
     def fill_brand(self, brand: str):
@@ -76,7 +63,6 @@ class PostHomeGardenPage(BaseListingPage):
 
     def select_condition(self, condition: str):
         # e.g. "New", "Like new", "Good", "Fair", "Needs repair"
-        btn = self.page.locator(f"button.rounded-full:has-text('{condition}')").first
+        btn = self.page.locator(f"button[aria-pressed]:has-text('{condition}')").first
         btn.wait_for(state="visible", timeout=8000)
-        if "border-primary" not in (btn.get_attribute("class") or ""):
-            btn.click()
+        btn.click()

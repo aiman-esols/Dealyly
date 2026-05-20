@@ -33,8 +33,8 @@ def test_post_home_garden(authenticated_page: Page):
     post_ad.set_negotiable()
 
     # Location
-    post_ad.select_wilaya("16")
-    post_ad.fill_commune("Alger Centre")
+    post_ad.select_wilaya("5")
+    post_ad.fill_commune("Arris")
 
     # Description
     # Description

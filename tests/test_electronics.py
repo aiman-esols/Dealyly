@@ -6,7 +6,7 @@ from pages.login_page import LoginPage
 
 
 @pytest.mark.parametrize("subcategory, kind, brand, model, condition, storage, screen_size, warranty, title, price, wilaya, commune", [
-    ("Audio & Headphones", "Audio", "Sony", "WH-1000XM5", "New", "N/A", "N/A", True, "Sony WH-1000XM5 Headphones", "45000", "16", "Alger Centre"),
+    ("Audio & Headphones", "Audio", "Sony", "WH-1000XM5", "Like new", "N/A", "N/A", True, "Sony WH-1000XM5 Headphones", "45000", "16", "Alger Centre"),
 ])
 def test_post_electronics_ad(authenticated_page: Page, subcategory, kind, brand, model, condition, storage, screen_size, warranty, title, price, wilaya, commune):
     post_ad = PostElectronicsPage(authenticated_page)

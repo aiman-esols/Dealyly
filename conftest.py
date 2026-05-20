@@ -38,6 +38,6 @@ def authenticated_page(page):
     login = LoginPage(page)
     login.goto()
     login.open_login_modal()
-    login.login("h.esolspk@gmail.com", "hassanesols")
+    login.login("aiman.esols@gmail.com", "Aiman@2025")
     login.verify_login_success()
     return page
