@@ -19,7 +19,7 @@ def test_post_farm_animals(authenticated_page: Page):
     post_ad.select_gender("Male")
     post_ad.set_vaccinated(True)
 
-    post_ad.fill_title("Healthy CAmel for Sale")
+    post_ad.fill_title("Healthy Camel for Sale")
     post_ad.fill_price("350000")
     post_ad.set_negotiable()
 
