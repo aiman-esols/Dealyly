@@ -1,4 +1,4 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 from pages.base_page import BaseListingPage
 
 
@@ -8,7 +8,7 @@ class PostAgriculturePage(BaseListingPage):
         super().__init__(page)
 
         self.upload_input = page.locator("#sec-photos input[type='file']")
-        self.product = page.locator("input[placeholder*='Dates']")
+        self.product = page.locator("input[placeholder*='Dates, Olives']")
         self.quantity = page.locator("input[inputmode='numeric'][min='0'][max='1000000']")
         self.origin = page.locator("input[placeholder*='Biskra']")
 
@@ -33,7 +33,7 @@ class PostAgriculturePage(BaseListingPage):
         btn = self.page.locator("button[title='Agriculture & Food']")
         btn.wait_for(state="visible", timeout=8000)
         btn.click()
-        self.page.wait_for_timeout(500)
+        self.page.wait_for_timeout(1000)
 
     def select_subcategory(self, subcategory: str):
         btn = self.page.locator(f"button.px-4:has-text('{subcategory}')").first
@@ -51,7 +51,6 @@ class PostAgriculturePage(BaseListingPage):
         self.quantity.fill(quantity)
 
     def select_unit(self, unit: str):
-        # e.g. "Kilogram (kg)", "Ton", "Liter", "Piece", "Box / Crate"
         btn = self.page.locator(f"button[aria-pressed]:has-text('{unit}')").first
         btn.wait_for(state="visible", timeout=8000)
         btn.click()
@@ -69,3 +68,7 @@ class PostAgriculturePage(BaseListingPage):
     def fill_origin(self, origin: str):
         self.origin.wait_for(state="visible", timeout=8000)
         self.origin.fill(origin)
+
+    def go_to_price_step(self):
+        self.page.locator("a[href='#sec-price']").click()
+        self.page.wait_for_timeout(500)

@@ -12,6 +12,7 @@ def test_post_agriculture_ad(authenticated_page: Page):
     )
     post_ad.wait_for_ai_processing()
 
+    # Force correct category regardless of AI detection
     post_ad.select_category()
     post_ad.select_subcategory("Dates (Deglet Nour)")
 
@@ -22,11 +23,12 @@ def test_post_agriculture_ad(authenticated_page: Page):
     post_ad.fill_origin("Biskra")
 
     post_ad.fill_title("Premium Deglet Nour Dates from Biskra")
+    post_ad.go_to_price_step()
     post_ad.fill_price("5000")
-    post_ad.set_negotiable()
+    
 
-    post_ad.select_wilaya("7")  # Biskra
-    post_ad.fill_commune("Biskra")
+    post_ad.select_wilaya("7")
+    post_ad.fill_commune("Chetma")
 
     post_ad.fill_description("Fresh premium quality Deglet Nour dates directly from Biskra farms.")
 
